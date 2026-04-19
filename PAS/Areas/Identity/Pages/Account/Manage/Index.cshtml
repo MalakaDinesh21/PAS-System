@@ -1,0 +1,53 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+
+        @if (Model.CanChooseRole)
+        {
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="h6 mb-2">Choose your account type</h4>
+                    <p class="text-body-secondary mb-3">You need a role to access Student/Supervisor features.</p>
+
+                    <form method="post" asp-page-handler="ChooseRole">
+                        <div class="form-floating mb-3">
+                            <select asp-for="ChooseRole.AccountType" class="form-select" aria-required="true">
+                                <option value="" selected disabled>Select account type</option>
+                                <option value="Student">Student</option>
+                                <option value="Supervisor">Supervisor</option>
+                            </select>
+                            <label asp-for="ChooseRole.AccountType" class="form-label"></label>
+                            <span asp-validation-for="ChooseRole.AccountType" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">Save account type</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
