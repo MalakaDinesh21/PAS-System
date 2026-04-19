@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    var roleLabel = User.IsInRole("Admin") ? "Admin"
+        : User.IsInRole("Supervisor") ? "Supervisor"
+        : User.IsInRole("Student") ? "Student"
+        : "No role";
+
+    var roleBadgeClass = roleLabel switch
+    {
+        "Admin" => "text-bg-danger",
+        "Supervisor" => "text-bg-primary",
+        "Student" => "text-bg-success",
+        _ => "text-bg-warning text-dark",
+    };
+
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            Hello @User.Identity?.Name!
+            <span class="badge rounded-pill ms-2 @roleBadgeClass">@roleLabel</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="btn btn-sm btn-outline-light ms-sm-2 mt-2 mt-sm-0">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>

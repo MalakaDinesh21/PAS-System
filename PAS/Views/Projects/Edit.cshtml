@@ -1,0 +1,47 @@
+﻿@model PAS.Models.Project
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="mb-3">
+    <h1 class="h3 mb-0">Edit Proposal</h1>
+    <div class="text-muted">Update your proposal details before it is matched.</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TechStack" class="form-label"></label>
+                <input asp-for="TechStack" class="form-control" />
+                <span asp-validation-for="TechStack" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ResearchArea" class="form-label"></label>
+                <input asp-for="ResearchArea" class="form-control" />
+                <span asp-validation-for="ResearchArea" class="text-danger"></span>
+            </div>
+            <div class="d-flex gap-2">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

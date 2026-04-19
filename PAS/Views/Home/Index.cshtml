@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="py-4">
+    <div class="p-4 p-md-5 mb-4 bg-success-subtle border border-success-subtle rounded-3">
+        <div class="container-fluid py-2">
+            <h1 class="display-5 fw-semibold mb-2">Project Allocation System</h1>
+            <p class="col-lg-8 fs-5 text-body-secondary mb-3">
+                Students submit project proposals, supervisors review anonymously, and matches are confirmed before contact details are revealed.
+            </p>
+
+            @if (User.Identity?.IsAuthenticated != true)
+            {
+                <div class="d-flex gap-2 flex-wrap">
+                    <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Register">Create an account</a>
+                    <a class="btn btn-outline-secondary" asp-area="Identity" asp-page="/Account/Login">Log in</a>
+                </div>
+            }
+            else if (User.IsInRole("Student"))
+            {
+                <a class="btn btn-success" asp-controller="Projects" asp-action="Index">Go to My Projects</a>
+            }
+            else if (User.IsInRole("Supervisor"))
+            {
+                <div class="d-flex gap-2 flex-wrap">
+                    <a class="btn btn-success" asp-controller="Projects" asp-action="Review">Go to Blind Review</a>
+                    <a class="btn btn-outline-secondary" asp-controller="Projects" asp-action="Matches">View My Matches</a>
+                </div>
+            }
+            else if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-success" asp-controller="Admin" asp-action="Users">Manage Users</a>
+            }
+        </div>
+    </div>
+
+    @if (User.Identity?.IsAuthenticated == true
+        && !User.IsInRole("Student")
+        && !User.IsInRole("Supervisor")
+        && !User.IsInRole("Admin"))
+    {
+        <div class="alert alert-warning" role="alert">
+            Your account is signed in, but it has no role assigned yet — that’s why you can’t see Student/Supervisor pages.
+            Go to <a asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a> and choose an account type.
+        </div>
+    }
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h5">Students</h2>
+                    <p class="text-body-secondary mb-3">Create proposals and track their status.</p>
+                    <a class="btn btn-outline-success" asp-controller="Projects" asp-action="Index">My Projects</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h5">Supervisors</h2>
+                    <p class="text-body-secondary mb-3">Review proposals anonymously and express interest.</p>
+                    <a class="btn btn-outline-success" asp-controller="Projects" asp-action="Review">Blind Review</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h5">Admins</h2>
+                    <p class="text-body-secondary mb-3">Create users and assign roles safely.</p>
+                    <a class="btn btn-outline-success" asp-controller="Admin" asp-action="Users">User Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

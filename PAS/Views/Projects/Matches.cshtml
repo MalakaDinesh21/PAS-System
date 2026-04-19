@@ -1,0 +1,47 @@
+@model IEnumerable<PAS.ViewModels.SupervisorMatchItemViewModel>
+@{
+    ViewData["Title"] = "My Matches";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+        <h1 class="h3 mb-0">My Matches</h1>
+        <div class="text-muted">Matched projects with student identity revealed.</div>
+    </div>
+    <a asp-action="Review" class="btn btn-outline-secondary">Back to Blind Review</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-secondary" role="alert">
+        No matches yet.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Research Area</th>
+                    <th>Tech Stack</th>
+                    <th>Status</th>
+                    <th>Student</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fw-semibold">@item.Title</td>
+                    <td>@item.ResearchArea</td>
+                    <td>@item.TechStack</td>
+                    <td><span class="badge text-bg-success">@item.Status</span></td>
+                    <td>@item.StudentEmail</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

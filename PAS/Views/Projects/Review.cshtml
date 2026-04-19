@@ -1,0 +1,62 @@
+@model IEnumerable<PAS.ViewModels.SupervisorReviewItemViewModel>
+@{
+    ViewData["Title"] = "Blind Review";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+        <h1 class="h3 mb-0">Blind Review</h1>
+        <div class="text-muted">Browse available project proposals (student identity hidden).</div>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-secondary" role="alert">
+        No projects available for review.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Research Area</th>
+                    <th>Tech Stack</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.ResearchArea</td>
+                    <td>@item.TechStack</td>
+                    <td><span class="badge text-bg-secondary">@item.Status</span></td>
+                    <td class="text-end">
+                        @if (!item.HasExpressedInterest)
+                        {
+                            <form asp-action="ExpressInterest" asp-route-id="@item.Id" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-outline-success">Express Interest</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="badge text-bg-info me-2">Interested</span>
+                            <form asp-action="ConfirmMatch" asp-route-id="@item.Id" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-success">Confirm Match</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

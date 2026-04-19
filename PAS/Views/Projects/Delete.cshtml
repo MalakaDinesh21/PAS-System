@@ -1,0 +1,38 @@
+﻿@model PAS.Models.Project
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="mb-3">
+    <h1 class="h3 mb-0">Withdraw Proposal</h1>
+    <div class="text-muted">This removes the proposal completely (only allowed before it is matched).</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+
+            <dt class="col-sm-3">Tech Stack</dt>
+            <dd class="col-sm-9">@Model.TechStack</dd>
+
+            <dt class="col-sm-3">Research Area</dt>
+            <dd class="col-sm-9">@Model.ResearchArea</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9"><span class="badge text-bg-secondary">@Model.Status</span></dd>
+        </dl>
+    </div>
+    <div class="card-footer d-flex gap-2">
+        <form asp-action="Delete" class="m-0">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Withdraw" class="btn btn-danger" />
+        </form>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+</div>

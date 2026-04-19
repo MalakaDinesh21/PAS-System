@@ -1,0 +1,76 @@
+@model IEnumerable<PAS.ViewModels.AdminUserListItemViewModel>
+@{
+    ViewData["Title"] = "Users";
+
+    string RoleBadgeClass(string role) => role switch
+    {
+        "Admin" => "text-bg-danger",
+        "Supervisor" => "text-bg-primary",
+        "Student" => "text-bg-success",
+        _ => "text-bg-secondary",
+    };
+
+    string RoleButtonClass(string role) => role switch
+    {
+        "Admin" => "btn-danger",
+        "Supervisor" => "btn-primary",
+        "Student" => "btn-success",
+        _ => "btn-outline-secondary",
+    };
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+        <h1 class="h3 mb-0">User Management</h1>
+        <div class="text-muted">Create users and assign roles.</div>
+    </div>
+    <a asp-action="Create" class="btn btn-success">Create User</a>
+</div>
+
+<div class="card border-success-subtle shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Roles</th>
+                        <th class="text-end">Set Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td class="fw-medium">@user.Email</td>
+                        <td>
+                            @if (user.Roles.Count == 0)
+                            {
+                                <span class="badge text-bg-warning text-dark rounded-pill">No role</span>
+                            }
+                            else
+                            {
+                                foreach (var role in user.Roles)
+                                {
+                                    <span class="badge rounded-pill me-1 @RoleBadgeClass(role)">@role</span>
+                                }
+                            }
+                        </td>
+                        <td class="text-end">
+                            <form asp-action="SetRole" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <div class="btn-group" role="group" aria-label="Set role">
+                                    <button type="submit" name="role" value="Student" class="btn btn-sm @RoleButtonClass("Student")">Student</button>
+                                    <button type="submit" name="role" value="Supervisor" class="btn btn-sm @RoleButtonClass("Supervisor")">Supervisor</button>
+                                    <button type="submit" name="role" value="Admin" class="btn btn-sm @RoleButtonClass("Admin")">Admin</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
