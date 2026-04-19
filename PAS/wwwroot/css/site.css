@@ -1,0 +1,60 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem var(--bs-body-bg), 0 0 0 0.25rem rgba(var(--bs-success-rgb), 0.35);
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: var(--bs-success-bg-subtle);
+}
+
+a {
+  color: var(--bs-success);
+}
+
+a:hover {
+  color: var(--bs-success-text-emphasis);
+}
+
+/* Navbar: emerald-tinted text + hover glow */
+.navbar.bg-success {
+  --pas-navbar-accent: var(--bs-success-bg-subtle);
+  --pas-navbar-glow: rgba(var(--bs-success-rgb), 0.55);
+}
+
+.navbar.bg-success .navbar-brand,
+.navbar.bg-success .nav-link,
+.navbar.bg-success .navbar-text {
+  color: var(--pas-navbar-accent);
+  transition: color 160ms ease, text-shadow 160ms ease, filter 160ms ease;
+}
+
+.navbar.bg-success .nav-link:hover,
+.navbar.bg-success .navbar-brand:hover {
+  color: var(--bs-white);
+  text-shadow: 0 0 0.65rem var(--pas-navbar-glow);
+  filter: drop-shadow(0 0 0.35rem var(--pas-navbar-glow));
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
